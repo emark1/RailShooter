@@ -8,7 +8,11 @@ public class Player : MonoBehaviour
     [SerializeField] float xSpeed = 4f;
     [SerializeField] float ySpeed = 4f;
     [SerializeField] float positionPitchFactor = .16f;
-
+    [SerializeField] float controlPitchFactor = -22f;
+    [SerializeField] float positionYawFactor = .16f;
+    [SerializeField] float controlRollFactor = -22f;
+    float xThrow, yThrow, zThrow;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -23,16 +27,16 @@ public class Player : MonoBehaviour
     }
 
     private void ProcessRotation() {
-        float pitch = transform.localPosition.y * positionPitchFactor;
-        float yaw = 0f;
-        float roll = 0f;
+        float pitch = transform.localPosition.y * positionPitchFactor + yThrow * controlPitchFactor;
+        float yaw = transform.localPosition.x * positionYawFactor;
+        float roll = xThrow * controlRollFactor;
 
         transform.localRotation = Quaternion.Euler(pitch, yaw, roll);
     }
 
     private void ProcessTranslation () {
-        float xThrow = CrossPlatformInputManager.GetAxis("Horizontal");
-        float yThrow = CrossPlatformInputManager.GetAxis("Vertical");
+        xThrow = CrossPlatformInputManager.GetAxis("Horizontal");
+        yThrow = CrossPlatformInputManager.GetAxis("Vertical");
 
         float xOffset = xThrow * xSpeed * Time.deltaTime;
         float yOffset = yThrow * ySpeed * Time.deltaTime;
