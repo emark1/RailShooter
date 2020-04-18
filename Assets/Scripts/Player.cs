@@ -13,11 +13,6 @@ public class Player : MonoBehaviour
     [SerializeField] float controlRollFactor = -22f;
     float xThrow, yThrow, zThrow;
     
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
